@@ -42,6 +42,7 @@ router.post('/register', (req, res) => {
 }) 
 
 router.post('/login', (req,res) =>{
+    console.log('login fetch')
     const {email, password } = req.body
     Users.findOne({ email }).exec()
     .then(user =>{
@@ -51,7 +52,7 @@ router.post('/login', (req,res) =>{
         crypto.pbkdf2(password, user.salt, 10000, 64, 'sha1', (err, key) => {
             const encryptedPassword = key.toString('base64')
             if(user.password === encryptedPassword){
-                const token = signToken(uesr._id)
+                const token = signToken(user._id)
                 return res.send({token})
             }
             return res.send('wrong user or password')
@@ -60,7 +61,9 @@ router.post('/login', (req,res) =>{
 })
 
 router.get('/me', isAuthenticated, (req, res) => {
-    res.send(req.use)
+    console.log('fetch me')
+    console.log('me fetch',req.user)
+    res.send(req.user)
 })
 
 module.exports = router 

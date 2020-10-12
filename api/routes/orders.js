@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
     Orders.find()
     .exec()
     .then(x => res.status(200).send(x)) 
+    //console.log('router get orders')
     //res.send('Get Orders') 
 }) 
 
@@ -16,11 +17,10 @@ router.get('/:id', (req,res) => {
     .exec()
     .then(x => res.status(200).send(x))
 })
-
 router.post('/', isAuthenticated, (req, res) => {
     const { _id } = req.user
     Orders.create({ ...req.body, user_id: _id }).then(x => res.status(201).send(x))
-    console.log({ _id })
+    //console.log({ _id })
 }) 
 
 router.put('/:id', isAuthenticated, hasRoles(['admin', 'user']), (req,res) =>{

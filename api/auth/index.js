@@ -13,10 +13,8 @@ const isAuthenticated = (req, res, next) => {
         .then((user) => {
             req.user = user
             next()
-
         })
     })
-
 }
 
 const hasRoles = roles => (req, res, next) => {
