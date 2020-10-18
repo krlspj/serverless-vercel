@@ -20,8 +20,9 @@ router.get('/:id', (req,res) => {
 router.post('/', isAuthenticated, (req, res) => {
     //console.log('post Order')
     const { _id, email } = req.user
-    Orders.create({ ...req.body, user_id: _id, user_name: email, oTime: getTime() }).then(x => res.status(201).send(x))
+    Orders.create({ ...req.body, user_id: _id, user_name: email }).then(x => res.status(201).send(x))
     //console.log({ _id })
+    /*oTime: getTime()*/
 }) 
 
 router.put('/:id', isAuthenticated, hasRoles(['admin', 'user']), (req,res) =>{
@@ -35,10 +36,11 @@ router.delete('/:id', isAuthenticated, (req,res) => {
         res.sendStatus(204)
     })
 })
-
+/*
 const getTime = () => {
     const d = new Date()
     return `${d.toLocaleDateString()} - ${d.toLocaleTimeString()}`
 }
+*/
 
 module.exports = router
